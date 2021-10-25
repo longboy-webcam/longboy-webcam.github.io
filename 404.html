@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LONGBOY</title>
+<style type="text/css">
+body {
+  background-color: black;
+  
+  }
+  
+video {
+  aspect-ratio: 4 / 3;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto; 
+  top: 0; 
+  left: 0;
+}
+
+</style>
+<script>
+  /** 
+ * js help from http://jsfiddle.net/anfnpvxy/4/ & https://www.reddit.com/r/HTML/comments/2ito28/random_html5_video_on_page_load_and_refresh/
+ * start when the browser has finished parsing but is still loading sub-resources (like videos)
+ * **/
+document.onreadystatechange = function () {
+  if (document.readyState == "interactive") {    
+
+    
+// build up your storage for video urls here 
+// leave out the file extension, we will let the browser decide which type he can play.
+// also note how I left out the 'http:' part. we don't need it, the browser automatically
+// decides if he needs http or https.
+var videoStorage = [ 
+    '//longboy.webcam/1',
+    '//longboy.webcam/2',
+    '//longboy.webcam/3',
+],
+    video = document.querySelector('video'),
+    // choose one random url from our storage as the active video
+    activeVideoUrl = videoStorage[Math.round(Math.random() * (videoStorage.length - 1))];        
+        video.setAttribute('poster', activeVideoUrl + '.jpg');
+// check which file extension your browser can play and set the video source accordingly
+if(video.canPlayType('video/webm')) {
+    video.setAttribute('src', activeVideoUrl + '.webm');
+} else if(video.canPlayType('video/mp4')) {
+    video.setAttribute('src', activeVideoUrl + '.mp4');
+}
+    
+    }
+}
+  </script>
+  </head>
+<body>
+<video playsinline autoplay muted loop poster="1.jpg" id="bgvid" oncontextmenu="return false;">
+</video>
+  <script async src="//static.getclicky.com/101338571.js"></script>
+<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/101338571ns.gif" /></p></noscript>
+</body>
+</html>
